@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerBaseState : IState
 {
@@ -16,12 +17,12 @@ public class PlayerBaseState : IState
 
     public virtual void Enter()
     {
-        
+        AddInputActionsCallbacks();
     }
 
     public virtual void Exit()
     {
-        
+        RemoveInputActionsCallbacks();
     }
 
     public virtual void HandleInput()
@@ -37,6 +38,30 @@ public class PlayerBaseState : IState
     public virtual void PhysicsUpdate()
     {
         
+    }
+
+    protected virtual void AddInputActionsCallbacks()
+    {
+        PlayerController input = _stateMachine.Player.Input;
+        input.PlayerActions.Movement.canceled += OnMovementCanceled;
+        input.PlayerActions.Run.started += OnRunStarted;
+    }
+
+    protected virtual void RemoveInputActionsCallbacks()
+    {
+        PlayerController input = _stateMachine.Player.Input;
+        input.PlayerActions.Movement.canceled -= OnMovementCanceled;
+        input.PlayerActions.Run.started -= OnRunStarted;
+    }
+
+    protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
+    {
+
+    }
+
+    protected virtual void OnRunStarted(InputAction.CallbackContext context)
+    {
+
     }
 
     protected void StartAnimation(int animatorHash)
