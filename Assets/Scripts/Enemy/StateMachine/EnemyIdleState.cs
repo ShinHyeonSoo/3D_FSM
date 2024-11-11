@@ -34,6 +34,4 @@ public class EnemyIdleState : EnemyBaseState
             return;
         }
     }
-
-    
 }

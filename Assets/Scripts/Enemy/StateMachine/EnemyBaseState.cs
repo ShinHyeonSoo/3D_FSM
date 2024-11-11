@@ -109,6 +109,8 @@ public class EnemyBaseState : IState
 
     protected bool IsInChasingRange()
     {
+        if (_stateMachine.Target._isDie) return false;
+
         float playerDistanceSqr = (_stateMachine.Target.transform.position - _stateMachine.Enemy.transform.position).sqrMagnitude;
         return playerDistanceSqr <= _stateMachine.Enemy.Data.PlayerChasingRange * _stateMachine.Enemy.Data.PlayerChasingRange;
     }
